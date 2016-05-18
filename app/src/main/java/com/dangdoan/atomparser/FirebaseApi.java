@@ -53,7 +53,7 @@ public class FirebaseApi {
         });
     }
 
-    public static void markFeedRead(FeedEntry entry) {
+    public static void markFeedRead(Feed entry) {
         if (entry.isRead()) {
             return;
         }
@@ -61,16 +61,16 @@ public class FirebaseApi {
         sRef.child(sRef.getAuth().getUid()).child("read").push().setValue(entry);
     }
 
-    public static Observable<List<FeedEntry>> getReadFeeds() {
+    public static Observable<List<Feed>> getReadFeeds() {
         return Observable.create(subscriber -> {
             Query readRef = sRef.child(sRef.getAuth().getUid()).child("read").orderByChild("published");
             readRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<FeedEntry> entries = new ArrayList<>();
+                    List<Feed> entries = new ArrayList<>();
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            entries.add(snapshot.getValue(FeedEntry.class));
+                            entries.add(snapshot.getValue(Feed.class));
                         }
                     }
                     subscriber.onNext(entries);
@@ -93,8 +93,8 @@ public class FirebaseApi {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot feedSnapshot : dataSnapshot.getChildren()) {
-                        FeedEntry feedEntry = feedSnapshot.getValue(FeedEntry.class);
-                        Log.i("FirebaseApi", feedEntry.getTitle());
+                        Feed feed = feedSnapshot.getValue(Feed.class);
+                        Log.i("FirebaseApi", feed.getTitle());
                     }
                 }
             }
@@ -111,7 +111,7 @@ public class FirebaseApi {
         return ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                handler.onFeedRead(dataSnapshot.getValue(FeedEntry.class));
+                handler.onFeedRead(dataSnapshot.getValue(Feed.class));
             }
 
             @Override
@@ -141,7 +141,7 @@ public class FirebaseApi {
     }
 
     interface OnFeedReadHandler {
-        void onFeedRead(FeedEntry readFeed);
+        void onFeedRead(Feed readFeed);
 
         void onError(Throwable throwable);
     }

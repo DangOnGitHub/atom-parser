@@ -39,7 +39,7 @@ public class MainFragment extends Fragment implements FeedHolder.OnFeedClickList
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     private Unbinder mUnbinder;
-    private List<FeedEntry> mEntries = new ArrayList<>();
+    private List<Feed> mEntries = new ArrayList<>();
     private Subscription mSubscription;
     private ChildEventListener mChildEventListener;
     private FeedAdapter mAdapter;
@@ -77,7 +77,7 @@ public class MainFragment extends Fragment implements FeedHolder.OnFeedClickList
                     progressDialog.dismiss();
                     FirebaseApi.subcribeToReadFeed(new FirebaseApi.OnFeedReadHandler() {
                         @Override
-                        public void onFeedRead(FeedEntry readFeed) {
+                        public void onFeedRead(Feed readFeed) {
                             int location = mEntries.indexOf(readFeed);
                             if (location != -1) {
                                 mEntries.get(location).markRead();
@@ -145,7 +145,7 @@ public class MainFragment extends Fragment implements FeedHolder.OnFeedClickList
     }
 
     @Override
-    public void onFeedClick(FeedEntry entry) {
+    public void onFeedClick(Feed entry) {
         FirebaseApi.markFeedRead(entry);
         Intent intent = DetailActivity.newIntent(getActivity(), entry.getLink());
         startActivity(intent);

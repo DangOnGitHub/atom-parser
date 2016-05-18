@@ -20,7 +20,7 @@ public class FeedHolder extends RecyclerView.ViewHolder implements View.OnClickL
     TextView mTextView1;
     @BindView(android.R.id.text2)
     TextView mTextView2;
-    private FeedEntry mEntry;
+    private Feed mEntry;
     private OnFeedClickListener mListener;
 
     public FeedHolder(View itemView) {
@@ -29,7 +29,7 @@ public class FeedHolder extends RecyclerView.ViewHolder implements View.OnClickL
         itemView.setOnClickListener(this);
     }
 
-    public void bindEntry(FeedEntry entry) {
+    public void bindEntry(Feed entry) {
         mEntry = entry;
         DateTime dateTime = new DateTime(entry.getPublished());
         mTextView1.setText(dateTime.toString(DateTimeFormat.shortDate()));
@@ -53,6 +53,6 @@ public class FeedHolder extends RecyclerView.ViewHolder implements View.OnClickL
     }
 
     public interface OnFeedClickListener {
-        void onFeedClick(FeedEntry entry);
+        void onFeedClick(Feed entry);
     }
 }

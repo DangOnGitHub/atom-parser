@@ -9,19 +9,18 @@ import java.net.URL;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by dangdoan on 5/11/16.
  */
 public class FeedStore {
-    public Observable<List<FeedEntry>> getRecentQuestions() {
+    public Observable<List<Feed>> getRecentQuestions() {
         FeedParser parser = new FeedParser();
         return Observable.create(subscriber -> {
             InputStream stream = null;
             try {
                 stream = downloadUrl("http://stackoverflow.com/feeds");
-                List<FeedEntry> entries = parser.parse(stream);
+                List<Feed> entries = parser.parse(stream);
                 subscriber.onNext(entries);
                 subscriber.onCompleted();
             } catch (XmlPullParserException e) {

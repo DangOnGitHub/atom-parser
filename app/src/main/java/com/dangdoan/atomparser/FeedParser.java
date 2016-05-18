@@ -23,7 +23,7 @@ public class FeedParser {
     private static final int TAG_LINK = 4;
     private static final int TAG_PUBLISHED = 5;
 
-    public List<FeedEntry> parse(InputStream inputStream) throws XmlPullParserException, IOException {
+    public List<Feed> parse(InputStream inputStream) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -35,8 +35,8 @@ public class FeedParser {
         }
     }
 
-    private List<FeedEntry> readFeed(XmlPullParser parser) throws IOException, XmlPullParserException {
-        List<FeedEntry> entries = new ArrayList<>();
+    private List<Feed> readFeed(XmlPullParser parser) throws IOException, XmlPullParserException {
+        List<Feed> entries = new ArrayList<>();
         parser.require(XmlPullParser.START_TAG, ns, "feed");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -52,7 +52,7 @@ public class FeedParser {
         return entries;
     }
 
-    private FeedEntry readEntry(XmlPullParser parser) throws IOException, XmlPullParserException {
+    private Feed readEntry(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "entry");
         String id = "";
         String title = "";
@@ -79,7 +79,7 @@ public class FeedParser {
                 skip(parser);
             }
         }
-        return new FeedEntry(id, title, summary, link, published);
+        return new Feed(id, title, summary, link, published);
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {

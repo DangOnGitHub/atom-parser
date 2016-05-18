@@ -11,10 +11,10 @@ import java.util.List;
  * Created by dangdoan on 5/11/16.
  */
 public class FeedAdapter extends RecyclerView.Adapter<FeedHolder> {
-    private List<FeedEntry> mEntries;
+    private List<Feed> mEntries;
     private FeedHolder.OnFeedClickListener mListener;
 
-    public FeedAdapter(List<FeedEntry> entries, FeedHolder.OnFeedClickListener listener) {
+    public FeedAdapter(List<Feed> entries, FeedHolder.OnFeedClickListener listener) {
         mEntries = entries;
         mListener = listener;
     }
@@ -28,7 +28,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedHolder> {
 
     @Override
     public void onBindViewHolder(FeedHolder holder, int position) {
-        FeedEntry entry = mEntries.get(position);
+        Feed entry = mEntries.get(position);
         holder.bindEntry(entry);
         holder.setListener(mListener);
     }

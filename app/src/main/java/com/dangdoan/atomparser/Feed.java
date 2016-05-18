@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by dangdoan on 5/11/16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FeedEntry {
+public class Feed {
     @JsonProperty("id")
     private String mId;
     @JsonProperty("title")
@@ -20,11 +20,11 @@ public class FeedEntry {
     private long mPublished;
     private boolean mIsRead = false;
 
-    public FeedEntry() {
+    public Feed() {
 
     }
 
-    public FeedEntry(String id, String title, String summary, String link, long published) {
+    public Feed(String id, String title, String summary, String link, long published) {
         mId = id;
         mTitle = title;
         mSummary = summary;
@@ -65,9 +65,9 @@ public class FeedEntry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FeedEntry feedEntry = (FeedEntry) o;
+        Feed feed = (Feed) o;
 
-        return mId.equals(feedEntry.mId);
+        return mId.equals(feed.mId);
 
     }
 
