@@ -19,12 +19,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.dangdoan.atomparser.FeedsMvp;
-import com.dangdoan.atomparser.utils.LoginManager;
 import com.dangdoan.atomparser.R;
 import com.dangdoan.atomparser.adapters.FeedAdapter;
 import com.dangdoan.atomparser.models.Feed;
 import com.dangdoan.atomparser.network.FacebookApi;
 import com.dangdoan.atomparser.presenters.FeedsPresenter;
+import com.dangdoan.atomparser.utils.LoginManager;
 
 import java.util.List;
 
@@ -54,16 +54,14 @@ public class FeedsFragment extends BaseFragment implements FeedsMvp.View, FeedHo
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mAdapter = new FeedAdapter(this);
+        mPresenter = new FeedsPresenter();
+
         if (!FacebookApi.isLoggedIn()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));
             getActivity().finish();
             return;
         }
-
-        mPresenter = new FeedsPresenter();
-        mPresenter.attachView(this);
-        mAdapter = new FeedAdapter(this);
-        mPresenter.getFeeds();
     }
 
     @Override
@@ -77,6 +75,9 @@ public class FeedsFragment extends BaseFragment implements FeedsMvp.View, FeedHo
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mPresenter.attachView(this);
+        mPresenter.getFeeds();
         return rootView;
     }
 
@@ -85,12 +86,6 @@ public class FeedsFragment extends BaseFragment implements FeedsMvp.View, FeedHo
         super.onDestroyView();
 
         hideProgress();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
         mPresenter.detachView();
     }
 

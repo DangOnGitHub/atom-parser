@@ -5,7 +5,7 @@ import com.dangdoan.atomparser.BaseMvp;
 /**
  * Created by dangdoan on 5/18/16.
  */
-public class BasePresenter<V extends BaseMvp.View> implements BaseMvp.Presenter<V> {
+public class BasePresenter<V> implements BaseMvp.Presenter<V> {
     private V mView;
 
     @Override

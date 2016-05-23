@@ -14,7 +14,7 @@ public interface FeedsMvp {
         void saveFeed(Feed feed);
     }
 
-    interface View extends BaseMvp.View {
+    interface View {
         void showFeeds(List<Feed> feeds);
 
         void showError(String message);

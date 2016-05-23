@@ -134,7 +134,9 @@ public class FirebaseApi {
     }
 
     public static void unsubcribeToReadFeed(ChildEventListener listener) {
-        sRef.child(sRef.getAuth().getUid()).child("read").removeEventListener(listener);
+        if (isLoggedIn()) {
+            sRef.child(sRef.getAuth().getUid()).child("read").removeEventListener(listener);
+        }
     }
 
     public interface OnFeedReadHandler {

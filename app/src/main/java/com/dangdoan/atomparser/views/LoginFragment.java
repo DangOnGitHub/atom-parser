@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Button;
 
+import com.dangdoan.atomparser.R;
 import com.dangdoan.atomparser.utils.LoginManager;
 import com.dangdoan.atomparser.utils.OnLoginManagerResult;
-import com.dangdoan.atomparser.R;
 import com.facebook.CallbackManager;
 
 import butterknife.BindView;
